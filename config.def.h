@@ -37,14 +37,23 @@ static const MonitorRule monrules[] = {
 	{ NULL,       0.55, 1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL,   -1,  -1 },
 };
 
-/* keyboard */
-static const struct xkb_rule_names xkb_rules = {
-	/* can specify fields: rules, model, layout, variant, options */
+/* keyboards */
+static const KeyboardRule kbrules[] = {
+	/* name     rules */
+	/* can specify rule fields: rules, model, layout, variant, options */
 	/* example:
-	.options = "ctrl:nocaps",
+	{ "Keyboard", { .options = "ctrl:nocaps" } },
 	*/
-	.options = NULL,
+	{ NULL,     { .options = NULL } },
 };
+
+static const KeyboardRule kbrules[] = {
+	/* name        rules  model  layout  variant  options */
+	/* example:
+	{ "Keyboard",  NULL,  NULL,  "us,de", NULL,   "ctrl:nocaps" },
+	*/
+	{ NULL,        NULL,  NULL,  NULL,    NULL,    NULL },
+}
 
 static const int repeat_rate = 25;
 static const int repeat_delay = 600;

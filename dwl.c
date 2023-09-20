@@ -195,6 +195,11 @@ struct Monitor {
 
 typedef struct {
 	const char *name;
+	const struct xkb_rule_names rules;
+} KeyboardRule;
+
+typedef struct {
+	const char *name;
 	float mfact;
 	int nmaster;
 	float scale;
@@ -795,8 +800,16 @@ createkeyboard(struct wlr_keyboard *keyboard)
 {
 	struct xkb_context *context;
 	struct xkb_keymap *keymap;
+	struct xkb_rule_names xkb_rules = {0};
+	const KeyboardRule *kbr;
 	Keyboard *kb = keyboard->data = ecalloc(1, sizeof(*kb));
 	kb->wlr_keyboard = keyboard;
+
+	for (kbr = kbrules; kbr < END(kbrules); kbr++) {
+		if ((!kbr->name || strstr(keyboard->base.name, kbr->name))) {
+			xkb_rules = kbr->rules;
+		}
+	}
 
 	/* Prepare an XKB keymap and assign it to the keyboard. */
 	context = xkb_context_new(XKB_CONTEXT_NO_FLAGS);
